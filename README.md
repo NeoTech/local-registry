@@ -1,4 +1,4 @@
-# Local docker registry start script for ARCH
+# Local docker registry start script for ARCH Linux
 It will spin up a local registry and register it with the local CA authority on Arch Linux
 
 Once up and running you will be able to issue 
