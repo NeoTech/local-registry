@@ -33,8 +33,10 @@ case "$1" in
 	nerdctl run -d -p 5000:5000 \
 		-v$(pwd)/certs:/certs \
 		-v$(pwd)/data:/var/lib/registry \
-		-v$(pwd)/config.yml:/etc/docker/registry/config.yml \
-		-v$(pwd)/users:/etc/registry \
+		-v$(pwd)/users:/auth/htpasswd \
+		-e "REGISTRY_AUTH=htpasswd" \
+		-e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+		-e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
 		-e REGISTRY_HTTP_TLS_KEY=/certs/cert.key \
 		-e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/cert.crt \
 		--name registry1 \
