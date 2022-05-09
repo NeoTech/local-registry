@@ -5,7 +5,7 @@ Once up and running you will be able to issue
 to see that it is functioning as it should.  `curl https://test:test@registry.local.com:5000/v2/_catalog`
 
 Depends on:
-	Nerdctl
-	Containerd
-	runc
-	openssl
+1) nerdctl
+2) containerd
+3) runc
+4) openssl
