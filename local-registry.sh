@@ -1,6 +1,7 @@
 #!/bin/bash
 HOST=$(ip -4 addr show dev eth0 | grep -ohE 'inet.[0-9\.]*?' | awk '{print $2}')
 export LOCALDNS="registry.local.com"
+export EXECUTOR="nerdctl"
 
 case "$1" in
     init)
@@ -9,7 +10,7 @@ case "$1" in
         chown -R a:a ./certs ./data
     ;;
     generate-ca)
-	openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ./certs/cert.key -out ./certs/cert.crt -subj "/C=US/ST=WA/L=Seattle/emailAddress=test@test.com" -addext "subjectAltName = DNS:${LOCALDNS},IP:${HOST}"
+	openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ./certs/cert.key -out ./certs/cert.crt -subj "/C=US/ST=WA/L=Seattle/emailAddress=test@${LOCALDNS}" -addext "subjectAltName = DNS:${LOCALDNS},IP:${HOST}"
 	trust anchor --store certs/cert.crt
     ;;
     inspect-cert)
@@ -30,7 +31,7 @@ case "$1" in
         rm -rf ./certs ./data
     ;;
     start)
-	nerdctl run -d -p 5000:5000 \
+	${EXECUTOR} run -d -p 5000:5000 \
 		-v$(pwd)/certs:/certs \
 		-v$(pwd)/data:/var/lib/registry \
 		-v$(pwd)/users:/auth/htpasswd \
@@ -43,7 +44,7 @@ case "$1" in
 		registry:latest
     ;;
     stop)
-	nerdctl kill registry1 && nerdctl rm registry1
+	${EXECUTOR} kill registry1 && ${EXECUTOR} rm registry1
     ;;
     create-user)
 	htpasswd -Bbc ./users test test
