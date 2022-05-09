@@ -1,0 +1,11 @@
+version = 2
+[plugins."io.containerd.grpc.v1.cri".registry]
+	[plugins."io.containerd.grpc.v1.cri".registry.configs]
+		[plugins."io.containerd.grpc.v1.cri".registry.configs."registry.local.com:5000".auth]
+			username = "test"
+			password = "test"
+
+
+
+
+
