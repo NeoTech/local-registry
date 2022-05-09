@@ -59,7 +59,12 @@ case "$1" in
 	/bin/bash -c "${0} clean"
     ;;
     *)
-	echo "Use: sudo $0 {up, down, start, stop, restart}"
+	echo "This runs on Arch Linux - not tested anywhere else."
+	echo "This uses openssl v3, nerdctl, containerd for running the registry service."
+	echo "It is self contained up and down, and can i nstall necessary support configs."
+	echo "WARNING, Containerd install, will overwrite your current config.. WARNING!!"
+	echo ""
+	echo "Use: sudo $0 {up, down, start, stop, restart | containerd-install, containerd-remove}"
     ;;
 esac
 
